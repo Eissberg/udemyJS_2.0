@@ -1,0 +1,11 @@
+JSHint Options
+
+https://jshint.com/docs/options/
+
+Образец
+
+original.zip
+
+Настроенный под курс
+
+jshintrc.zip

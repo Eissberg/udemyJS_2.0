@@ -1,0 +1,396 @@
+########    Создание проекта
+
+mkdir hello
+cd hello
+touch hello.html
+
+git init
+
+git add hello.html
+git add .
+
+git commit -m "First Commit"
+
+########    Проверка состояния
+
+git status
+
+########    Контроль отображения записей
+
+git log --pretty=oneline
+git log --pretty=oneline --max-count=2
+git log --pretty=oneline --since='5 minutes ago'
+git log --pretty=oneline --until='5 minutes ago'
+git log --pretty=oneline --author=<your name>
+git log --pretty=oneline --all
+git log --all --pretty=format:"%h %cd %s (%an)" --since='7 days ago' --author=Eugen
+
+git log --pretty=format:"%h %ad | %s%d [%an]" --graph --date=short
+Давайте рассмотрим его в деталях:
+
+--pretty="..." — определяет формат вывода.
+%h — укороченный хэш коммита
+%d — дополнения коммита («головы» веток или теги)
+%ad — дата коммита
+%s — комментарий
+%an — имя автора
+--graph — отображает дерево коммитов в виде ASCII-графика
+--date=short — сохраняет формат даты коротким и симпатичным
+Таким образом, каждый раз, когда вы захотите посмотреть лог, вам придется много печатать. 
+К счастью, мы узнаем о git алиасах в следующем уроке.
+Оба gitx (для Mac) и gitk (для любой платформы) полезны в изучении истории изменений.
+
+########    Алиасы
+
+git config --global alias.co checkout
+git config --global alias.ci commit
+git config --global alias.st status
+git config --global alias.br branch
+git config --global alias.hist "log --pretty=format:'%h %ad | %s%d [%an]' --graph --date=short"
+git config --global alias.type 'cat-file -t'
+git config --global alias.dump 'cat-file -p'
+
+########    Получение старых версий
+
+git hist
+
+Изучите данные лога и найдите хэш для первого коммита. Он должен быть в последней строке данных git hist. 
+Используйте этот хэш-код (достаточно первых 7 знаков) в команде ниже. Затем проверьте содержимое файла hello.html.
+git checkout <hash>
+cat hello.html
+
+Вернитесь к последней версии в ветке master
+git checkout master
+cat hello.html
+«master» — имя ветки по умолчанию. Переключая имена веток, вы попадаете на последнюю версию выбранной ветки.
+
+########    Создание тегов версий
+
+git tag v1
+
+git checkout v1^
+cat hello.html
+
+git checkout v1
+git checkout v1-beta
+
+git tag
+
+git hist master --all
+
+########    Отмена локальных изменений (до индексации)
+
+git checkout master
+
+gi status
+
+git checkout hello.html
+git status
+cat hello.html
+
+########    Отмена проиндексированных изменений (перед коммитом)
+
+git add hello.html
+
+git status
+
+git reset HEAD hello.html
+
+git checkout hello.html
+git status
+
+########    Отмена коммитов
+
+git add hello.html
+git commit -m "Oops, we didn't want this commit"
+
+git revert HEAD
+
+git hist
+
+########    Удаление коммиттов из ветки
+
+git hist
+
+git tag oops
+
+git reset --hard v1
+git hist
+
+git hist --all
+
+########    Удаление тега oops
+
+git tag -d oops
+git hist --all
+
+########    Внесение изменений в коммиты
+
+git add hello.html
+git commit -m "Add an author comment"
+
+git add hello.html
+git commit --amend -m "Add an author/email comment"
+
+git hist
+
+########    Перемещение файлов
+
+Переместите файл hello.html в каталог lib
+mkdir lib
+git mv hello.html lib
+git status
+
+Второй способ перемещения файлов
+mkdir lib
+mv hello.html lib
+git add lib/hello.html
+git rm hello.html
+
+########    Создание ветки
+
+git checkout -b style
+git status
+Примечание: git checkout -b <имяветки> является шорткатом для 
+git branch <имяветки> за которым идет git checkout <имяветки>.
+
+Добавьте файл стилей style.css
+touch lib/style.css
+git add lib/style.css
+git commit -m "Added css stylesheet"
+
+########    Навигация по веткам
+
+git hist --all
+
+########    Слияние веток
+
+git checkout style
+git merge master
+git hist --all
+
+########    Создание конфликта
+
+git checkout master
+
+git add lib/hello.html
+git commit -m 'Life is great!'
+
+Решение:
+устранить разбежности и выполнить 
+git add lib/hello.html
+git commit -m "Merged master fixed conflict."
+
+########    Перебазирование как альтернатива слиянию
+Сброс ветки style до точки перед первым слиянием
+
+git checkout style
+git hist
+
+git reset --hard <hash>
+
+git hist --all
+
+Сброс ветки master
+
+git checkout master
+git hist
+
+git reset --hard <hash>
+git hist --all
+
+Перебазирование
+
+git checkout style
+git rebase master
+git hist
+
+Слияние VS перебазирование
+Конечный результат перебазирования очень похож на результат слияния. Ветка style в 
+настоящее время содержит все свои изменения, а также все изменения ветки master. 
+Однако, дерево коммитов значительно отличается. Дерево коммитов ветки style было 
+переписано таким образом, что ветка master является частью истории коммитов. Это 
+делает цепь коммитов линейной и гораздо более читабельной.
+
+Когда использовать перебазирование, а когда слияние?
+Не используйте перебазирование …
+
+Если ветка является публичной и расшаренной. Переписывание общих веток будет мешать работе других членов команды.
+Когда важна точная история коммитов ветки (так как команда rebase переписывает историю коммитов).
+Учитывая приведенные выше рекомендации, я предпочитаю использовать rebase для кратковременных, 
+локальных веток, а слияние для веток в публичном репозитории.
+
+
+#########    Слияние в ветку master
+Мы поддерживали соответствие ветки style с веткой master (с помощью rebase), теперь давайте сольем изменения 
+style в ветку master.
+
+git checkout master
+git merge style
+
+git hist
+
+########    Клонирование репозиториев
+
+Перейдите в рабочий каталог и сделайте клон вашего репозитория hello.
+
+cd ..
+pwd
+ls
+
+В этот момент вы должны находиться в «рабочем» каталоге. Здесь должен быть единственный репозиторий 
+под названием «hello».
+
+git clone hello cloned_hello
+ls
+
+########    Просмотр клонированного репозитория
+
+cd cloned_hello
+ls
+
+git hist --all
+
+Вы увидите ветку master (HEAD) в списке истории. Вы также увидите ветки со странными 
+именами (origin/master, origin/style и origin/HEAD). Мы поговорим о них чуть позже.
+
+########    Что такое origin?
+
+git remote
+
+Мы видим, что клонированный репозиторий знает об имени по умолчанию удаленного репозитория. Давайте 
+посмотрим, можем ли мы получить более подробную информацию об имени по умолчанию:
+
+git remote show origin
+
+Мы видим, что «имя по умолчанию»(«origin») удаленного репозитория – оригинальное hello. Удаленные 
+репозитории обычно размещаются на отдельной машине, возможно, централизованном сервере. Однако, как 
+мы видим здесь, они могут с тем же успехом указывать на репозиторий на той же машине. Нет ничего 
+особенного в имени «origin», однако существует традиция использовать «origin» в качестве имени первичного 
+централизованного репозитория (если таковой имеется).
+
+########    Удаленные ветки
+
+git branch 
+
+Как мы видим, в списке только ветка master. Где ветка style? Команда git branch выводит только 
+список локальных веток по умолчанию.
+
+Список удаленных веток
+
+git branch -a
+
+Git выводит все коммиты в оригинальный репозиторий, но ветки в удаленном репозитории не рассматриваются 
+как локальные. Если мы хотим собственную ветку style, мы должны сами ее создать. Через минуту вы 
+увидите, как это делается.
+
+########    Изменение оригинального репозитория
+
+cd ../hello
+# (You should be in the original hello repository now)
+
+git add README
+git commit -m "Changed README in original repo"
+
+########     Извлечение изменений
+
+cd ../cloned_hello
+git fetch
+git hist --all
+
+cat README
+
+На данный момент в репозитории есть все коммиты из оригинального репозитория, но они не интегрированы 
+в локальные ветки клонированного репозитория.
+
+В истории выше найдите коммит «Changed README in original repo». Обратите внимание, что коммит включает 
+в себя коммиты «origin/master» и «origin/HEAD».
+
+Теперь давайте посмотрим на коммит «Updated index.html». Вы увидите, что локальная ветка master указывает 
+на этот коммит, а не на новый коммит, который мы только что извлекли.
+
+Выводом является то, что команда «git fetch» будет извлекать новые коммиты из удаленного репозитория, но 
+не будет сливать их с вашими наработками в локальных ветках.
+
+########     Слияние извлеченных изменений
+
+git merge origin/master
+
+cat README
+
+########     Извлечение и слияние изменений
+
+git pull эквивалентна комбинации git fetch и git merge
+
+git pull
+
+########    Добавление ветки наблюдения
+
+git branch --track style origin/style
+git branch -a
+git hist --max-count=2
+
+Теперь мы можем видеть ветку style в списке веток и логе.
+
+########    Чистые репозитории
+
+cd ..
+git clone --bare hello hello.git
+ls hello.git
+
+Как правило, репозитории, оканчивающиеся на «.git» являются чистыми репозиториями. Мы видим, что 
+в репозитории hello.git нет рабочего каталога. По сути, это есть не что иное, как каталог .git 
+нечистого репозитория.
+
+#########    Добавление удаленного репозитория
+
+cd hello
+git remote add shared ../hello.git
+
+#########    Отправка изменений
+
+git checkout master
+git add README
+git commit -m "Added shared comment to readme"
+
+git push shared master
+
+Мы должны были явно указать ветку master для отправки изменений. Это можно настроить автоматически, но 
+я все время забываю нужные команды. Для более простого управления удаленными ветками переключитесь в 
+«Git Remote Branch».
+
+########    Извлечение общих изменений
+
+Научиться извлекать изменения из общего репозитория.
+
+cd ../cloned_hello
+
+git remote add shared ../hello.git
+git branch --track shared master
+git pull shared master
+cat README
+
+########    Размещение ваших git репозиториев
+
+Научиться настраивать git сервер для совместного использования репозиториев.
+
+# (From the work directory)
+git daemon --verbose --export-all --base-path=.
+
+Теперь в отдельном окне терминала перейдите в ваш рабочий каталог
+
+# (From the work directory)
+git clone git://localhost/hello.git network_hello
+cd network_hello
+ls
+
+Отправка в Git Daemon
+Если вы хотите совершить отправку в репозиторий Git Daemon, добавьте метку --enable=receive-pack 
+к команде git daemon. Будьте осторожны, этот сервер не производит аутентификацию, поэтому любой может 
+отправлять изменения в ваш репозиторий.
+
+########    Расшаривание репозиториев
+
+Научиться расшаривать репозитории по WIFI.
+Посмотрите, запущен ли git daemon у вашего соседа. Обменяйтесь IP-адресами и проверьте, 
+сможете ли вы извлекать изменения из репозиториев друг друга.
