@@ -1,0 +1,2 @@
+Колбек функции
+https://learn.javascript.ru/callbacks
