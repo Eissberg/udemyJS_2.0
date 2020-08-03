@@ -1,0 +1,5 @@
+Ссылка на документ
+https://drive.google.com/file/d/1Nm2PDGru199Yf0c9l1T-upYbi0UkEj1F/view
+
+Style cssText Property
+https://www.w3schools.com/jsref/prop_style_csstext.asp
