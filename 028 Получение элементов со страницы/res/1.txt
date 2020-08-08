@@ -1,0 +1,8 @@
+Ссылка на документ
+https://drive.google.com/file/d/1sxbFDM645vAVnBhUuSgGKXadJTKuIn28/view
+
+Немного о псевдомассивах
+https://habr.com/ru/post/336136/
+
+Знаете ли вы селекторы?
+https://learn.javascript.ru/css-selectors
