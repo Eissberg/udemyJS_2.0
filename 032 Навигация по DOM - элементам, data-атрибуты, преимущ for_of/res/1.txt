@@ -1,0 +1,3 @@
+Использование data-* атрибутов
+https://developer.mozilla.org/ru/docs/Web/Guide/HTML/Using_data_attributes
+
