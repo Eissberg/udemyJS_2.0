@@ -1,0 +1,17 @@
+Ссылка на документ
+https://drive.google.com/file/d/1sxbFDM645vAVnBhUuSgGKXadJTKuIn28/view
+
+Список родных событий Javascript
+https://oddler.ru/blog/i63
+
+Справочник по событиям
+https://developer.mozilla.org/ru/docs/Web/Events
+
+Метод EventTarget.addEventListener()
+https://developer.mozilla.org/ru/docs/Web/API/EventTarget/addEventListener
+
+Метод EventTarget.removeEventListener()
+https://developer.mozilla.org/ru/docs/Web/API/EventTarget/removeEventListener
+
+Event
+https://developer.mozilla.org/ru/docs/Web/API/Event
