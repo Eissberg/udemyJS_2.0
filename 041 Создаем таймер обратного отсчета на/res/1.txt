@@ -1,0 +1,5 @@
+Object Property Value Shorthand in JavaScript with ES6
+https://alligator.io/js/object-property-shorthand-es6/
+
+Проверить код	
+https://github.com/yankovalenko94/JS_task_answers/tree/master/JS_step_8
