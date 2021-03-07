@@ -1,0 +1,3 @@
+
+Большой гайд по THIS	
+https://tproger.ru/translations/javascript-this-keyword/

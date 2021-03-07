@@ -1,0 +1,27 @@
+.blue {
+  width: 80px;
+  height: 30px;
+  background-color: rgb(0, 110, 255);
+}
+.red {
+  width: 80px;
+  height: 30px;
+  background-color: rgb(167, 2, 38);
+}
+button {
+	width: 80px;
+	height: 30px;
+	margin-top: 10px;
+	border: none;
+	border-radius: 8px;
+	background-color: #000;
+	color: rgb(185, 40, 40);
+	cursor: pointer;
+	outline: none;
+}
+.btn-block {
+  background-color: rgb(149, 179, 110);
+  color: rgb(185, 40, 40);
+  width: 1080px;
+	height: 60px;
+}

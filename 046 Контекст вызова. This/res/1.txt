@@ -1,0 +1,3 @@
+
+Функции конструкторы	
+https://learn.javascript.ru/constructor-new

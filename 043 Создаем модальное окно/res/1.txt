@@ -1,0 +1,5 @@
+Узнать кодж клавиши
+https://keycode.info/
+
+Проверить код	
+https://github.com/yankovalenko94/JS_task_answers/tree/master/JS_step_9

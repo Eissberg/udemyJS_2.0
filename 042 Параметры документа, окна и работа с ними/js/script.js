@@ -25,7 +25,7 @@ console.log(box.getBoundingClientRect().top);
 
 const style = window.getComputedStyle(box);
 console.log(style.display);
-//при помощи этого метода можно ролучить стили псевдоэлементов
+//при помощи этого метода можно получить стили псевдоэлементов
 
 //не путать с инлайн стилями, которые записуются в код и имеют больший приоритет
 
