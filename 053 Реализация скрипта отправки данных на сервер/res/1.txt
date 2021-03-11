@@ -1,2 +1,3 @@
-Проверить код
-https://github.com/yankovalenko94/JS_task_answers/tree/master/JS_step_13
+
+Проверить код	
+https://github.com/yankovalenko94/JS_task_answers/tree/master/JS_step_13/Food
