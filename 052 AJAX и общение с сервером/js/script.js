@@ -9,7 +9,7 @@ inputHrn.addEventListener('input', () => {
     // request.open(method, url, async, login, pass);   Состав запроса
     request.open('GET', 'js/current.json');
     request.setRequestHeader('Content-type', 'application/json; charset=utf-8');
-    request.send();
+    request.send()  ;
 
     // request.addEventListener('readystatechange', () => {         // через readystatechange
     //     if (request.readyState === 4 && request.status === 200) {
